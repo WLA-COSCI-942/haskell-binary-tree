@@ -1,8 +1,13 @@
+data Color = Red | Blue | Green
+data Fruit = Orange | Apple | Banana
+data Pet   = Dog | Cat 
+
+data Maybe a = Just a | Nothing
+
 data Tree a = Leaf | Node (Tree a) a (Tree a)
   deriving (Show, Eq)
-  
-playTree :: Tree Int
-playTree = Leaf
+
+data Person = Person {color :: Color, fruit :: Fruit, pet :: Pet}
 
 listToTree :: (Eq a, Ord a) => [a] -> Tree a
 listToTree []  = Leaf
@@ -11,9 +16,9 @@ listToTree (x:xs) = insert x (listToTree xs)
 
 insert :: (Eq a, Ord a) => a -> Tree a -> Tree a
 insert x Leaf = Node Leaf x Leaf
-insert x (Node rTree d lTree)
-  | x < d = Node (insert x rTree) d lTree
-  | x >= d = Node rTree d (insert x lTree)
+insert x (Node rTree value lTree)
+  | x < value  = Node (insert x rTree) value lTree
+  | x >= value = Node rTree value (insert x lTree)
 
 treeToList :: (Eq a, Ord a) => Tree a -> [a]
 treeToList Leaf = []
