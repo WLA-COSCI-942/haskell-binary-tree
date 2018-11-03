@@ -19,11 +19,19 @@ compliment G = C
 type DNA = [Pair Nucleotide]
 
 gene :: [Nucleotide]
-gene = [A, G, T, A, G, T, C, C]
+gene = [C, T, A]
+
+strand :: [Nucleotide]
+strand = [A, C, C, T, A, G, T, A, A, T]
 
 dnaComp :: [Nucleotide] -> DNA
 dnaComp []     = []
 dnaComp (n:ns) = Pair n (compliment n) : dnaComp ns 
+
+hasGene :: [Nucleotide] -> [Nucleotide] -> Bool
+hasGene _ [] = False
+hasGene [] _ = False
+hasGene g strand@(n:ns)  = if g == take (length g) strand then True else hasGene g ns
 
 data Maybe a = Just a | Nothing
 
