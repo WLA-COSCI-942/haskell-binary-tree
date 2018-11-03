@@ -2,6 +2,29 @@ data Color = Red | Blue | Green
 data Fruit = Orange | Apple | Banana
 data Pet   = Dog | Cat 
 
+data Nucleotide = A | G | T | C 
+  deriving (Show, Eq)
+
+data Pair a = Pair a a
+  deriving (Show, Eq)
+
+data Pair' a b = Pair' a b
+
+compliment :: Nucleotide -> Nucleotide
+compliment A = T
+compliment T = A
+compliment C = G
+compliment G = C
+
+type DNA = [Pair Nucleotide]
+
+gene :: [Nucleotide]
+gene = [A, G, T, A, G, T, C, C]
+
+dnaComp :: [Nucleotide] -> DNA
+dnaComp []     = []
+dnaComp (n:ns) = Pair n (compliment n) : dnaComp ns 
+
 data Maybe a = Just a | Nothing
 
 data Tree a = Leaf | Node (Tree a) a (Tree a)
