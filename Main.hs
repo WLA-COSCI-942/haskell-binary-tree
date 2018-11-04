@@ -1,22 +1,29 @@
+-- Sum Types
 data Color = Red | Blue | Green
 data Fruit = Orange | Apple | Banana
 data Pet   = Dog | Cat 
 
+-- Product Type
+data Person = Person {color :: Color, fruit :: Fruit, pet :: Pet}
+
+-- Using types to solve a problem
 data Nucleotide = A | G | T | C 
   deriving (Show, Eq)
 
 data Pair a = Pair a a
   deriving (Show, Eq)
 
+-- A possible implementation of pair 
 data Pair' a b = Pair' a b
+  deriving (Show, Eq)
+
+type DNA = [Pair Nucleotide]
 
 compliment :: Nucleotide -> Nucleotide
 compliment A = T
 compliment T = A
 compliment C = G
 compliment G = C
-
-type DNA = [Pair Nucleotide]
 
 gene :: [Nucleotide]
 gene = [C, T, A]
@@ -33,23 +40,20 @@ hasGene _ [] = False
 hasGene [] _ = False
 hasGene g strand@(n:ns)  = if g == take (length g) strand then True else hasGene g ns
 
-data Maybe a = Just a | Nothing
-
+-- Tree data type
 data Tree a = Leaf | Node (Tree a) a (Tree a)
   deriving (Show, Eq)
 
-data Person = Person {color :: Color, fruit :: Fruit, pet :: Pet}
+insert :: (Eq a, Ord a) => a -> Tree a -> Tree a
+insert value Leaf = Node Leaf value Leaf
+insert value (Node rTree x lTree)
+  | value < x  = Node (insert value rTree) x lTree
+  | value >= x = Node rTree x (insert value lTree)  
 
 listToTree :: (Eq a, Ord a) => [a] -> Tree a
 listToTree []  = Leaf
 listToTree [x] = insert x Leaf 
 listToTree (x:xs) = insert x (listToTree xs)
-
-insert :: (Eq a, Ord a) => a -> Tree a -> Tree a
-insert x Leaf = Node Leaf x Leaf
-insert x (Node rTree value lTree)
-  | x < value  = Node (insert x rTree) value lTree
-  | x >= value = Node rTree value (insert x lTree)
 
 treeToList :: (Eq a, Ord a) => Tree a -> [a]
 treeToList Leaf = []
@@ -63,6 +67,10 @@ reverse' [] = []
 reverse' [x] = [x]
 reverse' [x,y] = [y,x]
 reverse' (x:xs) = reverse xs ++ [x]
+
+map' :: (a -> b) -> [a] -> [b]
+map' _ []     = []
+map' f (a:as) = (f a) ++ map' as 
 
 magic :: (a -> b -> c) -> [a] -> [b] -> [c]
 magic _ [] [] = []
