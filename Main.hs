@@ -37,8 +37,13 @@ dnaComp (n:ns) = Pair n (compliment n) : dnaComp ns
 
 hasGene :: [Nucleotide] -> [Nucleotide] -> Bool
 hasGene _ [] = False
-hasGene [] _ = False
+hasGene [] _ = True
 hasGene g strand@(n:ns)  = if g == take (length g) strand then True else hasGene g ns
+
+hasSubList :: (Eq a) => [a] -> [a] -> Bool
+hasSubList _ [] = False 
+hasSubList [] _ = True
+hasSubList sub list@(head:tail) = if sub == take (length sub) list then True else hasSubList sub list
 
 -- Tree data type
 data Tree a = Leaf | Node (Tree a) a (Tree a)
@@ -68,9 +73,18 @@ reverse' [x] = [x]
 reverse' [x,y] = [y,x]
 reverse' (x:xs) = reverse xs ++ [x]
 
+-- Naive implementation
+-- fib :: Int -> Int
+-- fib 0 = 0
+-- fib 1 = 1
+-- fib n = fib (n - 1) + fib (n + 1)
+
+fibs :: [Int]
+fibs = 0 : 1 : magic (+) fibs (tail fibs)
+
 map' :: (a -> b) -> [a] -> [b]
 map' _ []     = []
-map' f (a:as) = (f a) ++ map' as 
+map' f (a:as) = (f a) : map' f as 
 
 magic :: (a -> b -> c) -> [a] -> [b] -> [c]
 magic _ [] [] = []
