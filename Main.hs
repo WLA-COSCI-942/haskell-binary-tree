@@ -1,7 +1,9 @@
 -- Sum Types
-data Color = Red | Blue | Green
-data Fruit = Orange | Apple | Banana
-data Pet   = Dog | Cat 
+data Color = Red | Blue | Green --Cardinality of 3
+data Fruit = Orange | Apple | Banana --Cardinality of 3
+data Pet   = Dog | Cat --Cardinality of 2
+
+-- (\x -> x + 1) anonymous function, lambda expression
 
 -- Product Type
 data Person = Person {color :: Color, fruit :: Fruit, pet :: Pet}
@@ -97,3 +99,4 @@ addLists xs ys = magic (+) xs ys
 
 mulLists :: [Int] -> [Int] -> [Int]
 mulLists xs ys = magic (*) xs ys
+
