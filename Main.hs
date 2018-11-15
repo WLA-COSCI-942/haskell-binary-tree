@@ -1,3 +1,5 @@
+import Data.Ratio (Ratio, (%), denominator, numerator)
+
 -- Sum Types
 data Color = Red | Blue | Green --Cardinality of 3
 data Fruit = Orange | Apple | Banana --Cardinality of 3
@@ -38,9 +40,59 @@ magic f [] _  = []
 magic f _  [] = []
 magic f (a:as) (b:bs) = (f a b) : magic f as bs
 
+magic :: a -> b
+magic' = undefined
+
 addLists :: [Int] -> [Int] -> [Int]
 addLists xs ys = magic (+) xs ys  
 
 mulLists :: [Int] -> [Int] -> [Int]
 mulLists xs ys = magic (*) xs ys
+ 
+egyptianFraction :: Integral a => Ratio a -> [Ratio a]
+egyptianFraction n
+  | n < 0 = map negate (egyptianFraction (-n))
+  | n == 0 = []
+  | x == 1 = [n]
+  | x > y = (x `div` y % 1) : egyptianFraction (x `mod` y % y)
+  | otherwise = (1 % r) : egyptianFraction ((-y) `mod` x % (y * r))
+  where
+    x = numerator n
+    y = denominator n
+    r = y `div` x + 1
 
+{-
+def ef(fr)
+  ans = []
+  if fr >= 1
+    return [[fr.to_i], Rational(0, 1)]  if fr.denominator == 1
+    intfr = fr.to_i
+    ans, fr = [intfr], fr - intfr
+  end
+  x, y = fr.numerator, fr.denominator
+  while x != 1
+    ans << Rational(1, (1/fr).ceil)
+    fr = Rational(-y % x, y * (1/fr).ceil)
+    x, y = fr.numerator, fr.denominator
+  end
+  ans << fr
+end
+ 
+for fr in [Rational(43, 48), Rational(5, 121), Rational(2014, 59)]
+  puts '%s => %s' % [fr, ef(fr).join(' + ')]
+end
+ 
+lenmax = denommax = [0]
+for b in 2..99
+  for a in 1...b
+    fr = Rational(a,b)
+    e = ef(fr)
+    elen, edenom = e.length, e[-1].denominator
+    lenmax = [elen, fr] if elen > lenmax[0]
+    denommax = [edenom, fr] if edenom > denommax[0]
+  end
+end
+puts 'Term max is %s with %i terms' % [lenmax[1], lenmax[0]]
+dstr = denommax[0].to_s
+puts 'Denominator max is %s with %i digits' % [denommax[1], dstr.size], dstr
+-}
