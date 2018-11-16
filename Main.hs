@@ -1,9 +1,11 @@
 import Data.Ratio (Ratio, (%), denominator, numerator)
 
 -- Sum Types
-data Color = Red | Blue | Green --Cardinality of 3
-data Fruit = Orange | Apple | Banana --Cardinality of 3
-data Pet   = Dog | Cat --Cardinality of 2
+data Color = Red | Blue | Green -- Cardinality of 3
+data Fruit = Orange | Apple | Banana -- Cardinality of 3
+data Pet   = Dog | Cat -- Cardinality of 2
+
+data Binary = One | Zero -- Cardinality of 2
 
 -- (\x -> x + 1) anonymous function, lambda expression
 
@@ -40,7 +42,7 @@ magic f [] _  = []
 magic f _  [] = []
 magic f (a:as) (b:bs) = (f a b) : magic f as bs
 
-magic :: a -> b
+magic' :: a -> b
 magic' = undefined
 
 addLists :: [Int] -> [Int] -> [Int]
@@ -48,6 +50,12 @@ addLists xs ys = magic (+) xs ys
 
 mulLists :: [Int] -> [Int] -> [Int]
 mulLists xs ys = magic (*) xs ys
+
+allOddNums :: [Int]
+allOddNums = [2 * n + 1 | n <- [0..]]
+
+allEvenNums :: [Int]
+allEvenNums = [0, 2..]
  
 egyptianFraction :: Integral a => Ratio a -> [Ratio a]
 egyptianFraction n
