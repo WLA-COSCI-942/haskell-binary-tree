@@ -1,14 +1,19 @@
 import Data.Ratio (Ratio, (%), denominator, numerator)
 
 -- Sum Types
-data Color = Red | Blue | Green -- Cardinality of 3
-data Fruit = Orange | Apple | Banana -- Cardinality of 3
-data Pet   = Dog | Cat -- Cardinality of 2
+data Food  = Apple | Burger | Pasta | Sushi | Steak -- Cardinality of 5
+data Color = Blue | Green | Red | Yellow -- Cardinality of 4
+data Pet   = Dog | Cat | Bird -- Cardinality of 3
+
+data Nonsense = Food | Color -- Cardinality of 5 + 4 = 9
+
+data Useless a = Useless a
+data Maybe a = Just a | Nothing 
 
 -- (\x -> x + 1) anonymous function, lambda expression
 
 -- Product Type
-data Person = Person {color :: Color, fruit :: Fruit, pet :: Pet}
+data Person = Person {food :: Food, color :: Color, pet :: Pet}
 
 hasSubList :: (Eq a) => [a] -> [a] -> Bool
 hasSubList _ [] = False 
