@@ -5,8 +5,6 @@ data Color = Red | Blue | Green -- Cardinality of 3
 data Fruit = Orange | Apple | Banana -- Cardinality of 3
 data Pet   = Dog | Cat -- Cardinality of 2
 
-data Binary = One | Zero -- Cardinality of 2
-
 -- (\x -> x + 1) anonymous function, lambda expression
 
 -- Product Type
