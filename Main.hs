@@ -2,10 +2,9 @@ import Data.Ratio (Ratio, (%), denominator, numerator)
 
 -- Sum Types
 data Food  = Apple | Burger | Pasta | Sushi | Steak -- Cardinality of 5
-data Color = Blue | Green | Red | Yellow -- Cardinality of 4
-data Pet   = Dog | Cat | Bird -- Cardinality of 3
+data Color = Blue | Green | Red -- Cardinality of 3
 
-data Nonsense = Food | Color -- Cardinality of 5 + 4 = 9
+data Nonsense = Food | Color -- Cardinality of 5 + 3 = 9
 
 data Useless a = Useless a
 data Maybe a = Just a | Nothing 
@@ -13,7 +12,13 @@ data Maybe a = Just a | Nothing
 -- (\x -> x + 1) anonymous function, lambda expression
 
 -- Product Type
-data Person = Person {food :: Food, color :: Color, pet :: Pet}
+data Person = Person {food :: Food, color :: Color}
+data Person = Person Food Color
+
+{-
+We write A^B as the set of all functions f:B→A. 
+Namely f is a function whose domain is B and takes values in A.
+-}
 
 hasSubList :: (Eq a) => [a] -> [a] -> Bool
 hasSubList _ [] = False 
@@ -107,3 +112,4 @@ puts 'Term max is %s with %i terms' % [lenmax[1], lenmax[0]]
 dstr = denommax[0].to_s
 puts 'Denominator max is %s with %i digits' % [denommax[1], dstr.size], dstr
 -}
+
