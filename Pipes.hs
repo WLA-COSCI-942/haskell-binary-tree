@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {-
 Fun side note. Function composition is the equivalent of a syllogism in logic:
 
@@ -19,6 +20,8 @@ myReverse (h:tail) = myReverse tail ++ [h]
 
 isPalindrome :: String -> Bool
 isPalindrome x = myReverse x == x    
+=======
+>>>>>>> cb87cc492402ed7c6e0068977e3afc5050b87376
 
 
 
