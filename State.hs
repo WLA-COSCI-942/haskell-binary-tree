@@ -14,19 +14,22 @@ between 1 and 6.
 
 
 rollNDiceIO :: Int -> IO [Int]
-rollNDiceIO 0 = evaluate []
-rollNDiceIO n = liftA2 (++) gen recursive
-    where
-        gen :: IO [Int]
-        gen = invert $ [randomRIO (1,6)]
+rollNDiceIO 0 = pure []
+rollNDiceIO n = appendIOList getListRand (rollNDiceIO (n - 1))
+--rollNDiceIO n = l
 
-        recursive :: IO [Int]
-        recursive = rollNDiceIO (n - 1)
+-- (>>=) :: IO a -> (a -> IO b) -> IO b
 
-        --IO Int 
+function1 :: [Int] -> IO [Int]
+function1 [] = pure []
+function1 (x:xs) = liftA2 (++) (pure [x]) (pure xs)
 
+appendIOList :: IO [a] -> IO [a] -> IO [a]
+appendIOList = liftA2 (++)
 
-invert :: [IO Int] -> IO [Int]
-invert [] = evaluate []
-invert ioList = evaluate $ [(head ioList)] 
+getListRand :: IO [Int]
+getListRand = liftA2 (:) (ioDiceRoll) (pure [])
+    where 
+        ioDiceRoll :: IO Int
+        ioDiceRoll = randomRIO (1,6)
 
