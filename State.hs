@@ -33,3 +33,27 @@ getListRand = liftA2 (:) (ioDiceRoll) (pure [])
         ioDiceRoll :: IO Int
         ioDiceRoll = randomRIO (1,6)
 
+generator :: StdGen
+generator = mkStdGen 76214378
+
+clumsyRollDice :: (Int, Int)
+clumsyRollDice = (n, m)
+        where
+        (n, g) = randomR (1,6) (mkStdGen 234248)
+        (m, _) = randomR (1,6) g
+
+{-
+Implement a function 
+rollDice :: StdGen -> ((Int, Int), StdGen) that, given a generator, 
+returns a tuple with our random numbers as the first element and the last generator as the second.
+-}
+
+rollDice :: StdGen -> ((Int, Int), StdGen)
+rollDice x = ((n, m), l)
+    where
+    (n, g) = randomR (1,6) x
+    (m, l) = randomR (1,6) g
+
+
+
+
