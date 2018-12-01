@@ -13,7 +13,7 @@ data Maybe a = Just a | Nothing
 
 -- Product Type
 data Person = Person {food :: Food, color :: Color}
-data Person = Person Food Color
+-- data Person = Person Food Color
 
 {-
 We write A^B as the set of all functions f:B→A. 
@@ -76,6 +76,10 @@ egyptianFraction n
     x = numerator n
     y = denominator n
     r = y `div` x + 1
+
+myReverse :: [a] -> [a]
+myReverse [] = []
+myReverse (head:tail) = myReverse tail ++ [head]
 
 {-
 def ef(fr)
