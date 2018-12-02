@@ -18,16 +18,27 @@ We write A^B as the set of all functions f:B→A.
 Namely f is a function whose domain is B and takes values in A.
 -}
 
+(##) :: Int -> Int -> Bool
+(##) = \x y -> x `mod` y == 0
+
+c = 25 ## 5
+
+funcMsg :: (Eq a, Show b) => (a -> a -> Bool) -> a -> a -> b -> b -> String
+funcMsg f x y pass fail = if f x y then show pass else show fail
+
+data Answer = Yep | Nope 
+  deriving (Show)
+
+isEqual :: Int -> Int -> String
+isEqual x y = funcMsg (==) x y Yep Nope
+
+divides :: Int -> Int -> String
+divides x y = funcMsg (##) x y Yep Nope
+
 hasSubList :: (Eq a) => [a] -> [a] -> Bool
 hasSubList _ [] = False 
 hasSubList [] _ = True
 hasSubList sub list@(head:tail) = if sub == take (length sub) list then True else hasSubList sub list
-
-reverse' :: [a] -> [a]
-reverse' [] = []
-reverse' [x] = [x]
-reverse' [x,y] = [y,x]
-reverse' (x:xs) = reverse xs ++ [x]
 
 -- Naive implementation
 -- fib :: Int -> Int
@@ -39,7 +50,6 @@ fibs :: [Int]
 fibs = 0 : 1 : magic (+) fibs (tail fibs)
 
 magic :: (a -> b -> c) -> [a] -> [b] -> [c]
-magic _ [] [] = []
 magic f [] _  = []
 magic f _  [] = []
 magic f (a:as) (b:bs) = (f a b) : magic f as bs
@@ -111,7 +121,6 @@ data Pair' a b = Pair' a b
 
 pairIntChar :: Pair' Int Char
 pairIntChar = Pair' 7 'A'
-
 
 pairInt :: Pair Int
 pairInt = Pair 7 100
