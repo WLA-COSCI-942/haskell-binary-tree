@@ -6,8 +6,6 @@ data Color = Blue | Green | Red -- Cardinality of 3
 
 data Nonsense = Food | Color -- Cardinality of 5 + 3 = 9
 
-data Useless a = Useless a
-data Maybe a = Just a | Nothing 
 
 -- (\x -> x + 1) anonymous function, lambda expression
 
@@ -40,18 +38,15 @@ reverse' (x:xs) = reverse xs ++ [x]
 fibs :: [Int]
 fibs = 0 : 1 : magic (+) fibs (tail fibs)
 
-map' :: (a -> b) -> [a] -> [b]
-map' _ []     = []
-map' f (a:as) = (f a) : map' f as 
-
 magic :: (a -> b -> c) -> [a] -> [b] -> [c]
 magic _ [] [] = []
 magic f [] _  = []
 magic f _  [] = []
 magic f (a:as) (b:bs) = (f a b) : magic f as bs
 
-magic' :: a -> b
-magic' = undefined
+map' :: (a -> b) -> [a] -> [b]
+map' _ []     = []
+map' f (a:as) = (f a) : map' f as 
 
 addLists :: [Int] -> [Int] -> [Int]
 addLists xs ys = magic (+) xs ys  
@@ -59,11 +54,8 @@ addLists xs ys = magic (+) xs ys
 mulLists :: [Int] -> [Int] -> [Int]
 mulLists xs ys = magic (*) xs ys
 
-allOddNums :: [Int]
-allOddNums = [2 * n + 1 | n <- [0..]]
-
-allEvenNums :: [Int]
-allEvenNums = [0, 2..]
+infiniteEvens :: [Integer]
+infiniteEvens = [0, 2..]
  
 egyptianFraction :: Integral a => Ratio a -> [Ratio a]
 egyptianFraction n
@@ -77,43 +69,49 @@ egyptianFraction n
     y = denominator n
     r = y `div` x + 1
 
+addThree :: Int -> Int 
+addThree x = x + 3
+
+isLucky :: Int -> String
+isLucky 7 = "This is lucky!"
+isLucky _ = "This is not lucky..."
+
 myReverse :: [a] -> [a]
 myReverse [] = []
 myReverse (head:tail) = myReverse tail ++ [head]
 
+infiniteOdds :: [Integer]
+infiniteOdds = [ 2 * n + 1 | n <- [0..]]
+
 {-
-def ef(fr)
-  ans = []
-  if fr >= 1
-    return [[fr.to_i], Rational(0, 1)]  if fr.denominator == 1
-    intfr = fr.to_i
-    ans, fr = [intfr], fr - intfr
-  end
-  x, y = fr.numerator, fr.denominator
-  while x != 1
-    ans << Rational(1, (1/fr).ceil)
-    fr = Rational(-y % x, y * (1/fr).ceil)
-    x, y = fr.numerator, fr.denominator
-  end
-  ans << fr
-end
- 
-for fr in [Rational(43, 48), Rational(5, 121), Rational(2014, 59)]
-  puts '%s => %s' % [fr, ef(fr).join(' + ')]
-end
- 
-lenmax = denommax = [0]
-for b in 2..99
-  for a in 1...b
-    fr = Rational(a,b)
-    e = ef(fr)
-    elen, edenom = e.length, e[-1].denominator
-    lenmax = [elen, fr] if elen > lenmax[0]
-    denommax = [edenom, fr] if edenom > denommax[0]
-  end
-end
-puts 'Term max is %s with %i terms' % [lenmax[1], lenmax[0]]
-dstr = denommax[0].to_s
-puts 'Denominator max is %s with %i digits' % [denommax[1], dstr.size], dstr
+Fun side note. Function composition is the equivalent of a syllogism in logic:
+
+All men are mortal. Socrates is a man. Therefore, Socrates is mortal.
+
+A syllogism composes two material implications into one:
+
+(Man => Mortal), (Socrates => Man), therefore (Socrates => Mortal)
+Therefore...
+
+(b -> c) -> (a -> b) -> (a -> c)
+... which is the type of the . function.
 -}
 
+data Shape = Square Float | Triangle Float Float
+
+area :: Shape -> Float
+area (Square side) = side ^ 2
+area (Triangle base height) = 0.5 * base * height 
+
+data Pair a = Pair a a
+    deriving (Show)
+
+data Pair' a b = Pair' a b 
+    deriving (Show)
+
+pairIntChar :: Pair' Int Char
+pairIntChar = Pair' 7 'A'
+
+
+pairInt :: Pair Int
+pairInt = Pair 7 100
