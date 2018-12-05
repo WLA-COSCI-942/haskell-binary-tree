@@ -1,6 +1,10 @@
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE InstanceSigs #-}
 
+import Control.Applicative
+import System.Random
+import Control.Exception.Base
+
 data Suit = Diamonds | Clubs | Hearts | Spades
     deriving (Show, Eq)
 
@@ -45,29 +49,29 @@ instance Enum Rank where
     fromEnum Ace   = fromEnum King + 1
 
     toEnum :: Int -> Rank
-    toEnum 1 = Two
-    toEnum 2 = Three
-    toEnum 3 = Four
-    toEnum 4 = Five
-    toEnum 5 = Six
-    toEnum 6 = Seven
-    toEnum 7 = Eight
-    toEnum 8 = Nine
-    toEnum 9 = Ten
+    toEnum 1  = Two
+    toEnum 2  = Three
+    toEnum 3  = Four
+    toEnum 4  = Five
+    toEnum 5  = Six
+    toEnum 6  = Seven
+    toEnum 7  = Eight
+    toEnum 8  = Nine
+    toEnum 9  = Ten
     toEnum 10 = Jack
     toEnum 11 = Queen
     toEnum 12 = King
     toEnum 13 = Ace
 
 instance Enum Card where
-    toEnum x = Joker
-    fromEnum card = case card of (Joker) -> (-1)
+    toEnum x      = Joker
+    fromEnum card = case card of (Joker) -> 0
                                  (Card {suit, rank}) -> (fromEnum suit) + (fromEnum rank)
 
 instance Eq Card where 
     (==) Joker _ = True
     (==) _ Joker = True
-    (==) c1 c2 = s1 == s2 && r1 == r2 
+    (==) c1 c2   = s1 == s2 && r1 == r2 
         where
             s1 = suit c1
             s2 = suit c2
@@ -75,3 +79,13 @@ instance Eq Card where
             r2 = rank c2
     (/=) c1 c2 = not $ (==) c1 c2
 
+    {-
+randoInt :: IO Int
+randoInt 
+-}
+
+randomRank :: IO Rank
+randomRank = toEnum <$> randomRIO (1, 13)
+
+randomSuit :: IO Suit
+randomSuit = toEnum <$> randomRIO (1,4)

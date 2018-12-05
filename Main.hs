@@ -1,4 +1,7 @@
 import Data.Ratio (Ratio, (%), denominator, numerator)
+import Control.Applicative
+import System.Random
+import Control.Exception.Base
 
 -- Sum Types
 data Food  = Apple | Burger | Pasta | Sushi | Steak -- Cardinality of 5
