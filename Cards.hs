@@ -1,4 +1,7 @@
-data Suit = Clubs | Diamonds | Hearts | Spades
+{-# LANGUAGE NamedFieldPuns #-}
+{-# LANGUAGE InstanceSigs #-}
+
+data Suit = Diamonds | Clubs | Hearts | Spades
     deriving (Show, Eq)
 
 data Rank = Two | Three | Four | Five | Six | Seven | Eight | Nine | Ten | Jack | Queen | King | Ace
@@ -12,11 +15,54 @@ type Deck = [Card]
 data Hand = Hand Card Card Card Card Card
     deriving(Eq)
 
-{-
-instance Enum Hand where
-    toEnum = undefined
-    fromEnum = undefined
--}
+instance Enum Suit where
+    fromEnum :: Suit -> Int
+    fromEnum Diamonds = 1
+    fromEnum Clubs    = fromEnum Diamonds + 1
+    fromEnum Hearts   = fromEnum Clubs + 1
+    fromEnum Spades   = fromEnum Hearts + 1
+
+    toEnum :: Int -> Suit
+    toEnum 1 = Diamonds
+    toEnum 2 = Clubs
+    toEnum 3 = Hearts
+    toEnum 4 = Spades
+
+instance Enum Rank where 
+    fromEnum :: Rank -> Int
+    fromEnum Two   = 1
+    fromEnum Three = fromEnum Two + 1
+    fromEnum Four  = fromEnum Three + 1
+    fromEnum Five  = fromEnum Four + 1
+    fromEnum Six   = fromEnum Five + 1
+    fromEnum Seven = fromEnum Six + 1
+    fromEnum Eight = fromEnum Seven + 1
+    fromEnum Nine  = fromEnum Eight + 1
+    fromEnum Ten   = fromEnum Nine + 1
+    fromEnum Jack  = fromEnum Ten + 1
+    fromEnum Queen = fromEnum Jack + 1
+    fromEnum King  = fromEnum Queen + 1
+    fromEnum Ace   = fromEnum King + 1
+
+    toEnum :: Int -> Rank
+    toEnum 1 = Two
+    toEnum 2 = Three
+    toEnum 3 = Four
+    toEnum 4 = Five
+    toEnum 5 = Six
+    toEnum 6 = Seven
+    toEnum 7 = Eight
+    toEnum 8 = Nine
+    toEnum 9 = Ten
+    toEnum 10 = Jack
+    toEnum 11 = Queen
+    toEnum 12 = King
+    toEnum 13 = Ace
+
+instance Enum Card where
+    toEnum x = Joker
+    fromEnum card = case card of (Joker) -> (-1)
+                                 (Card {suit, rank}) -> (fromEnum suit) + (fromEnum rank)
 
 instance Eq Card where 
     (==) Joker _ = True
