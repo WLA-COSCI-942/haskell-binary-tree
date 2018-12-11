@@ -9,6 +9,13 @@ data Color = Blue | Green | Red -- Cardinality of 3
 
 data Nonsense = Food | Color -- Cardinality of 5 + 3 = 9
 
+{-
+map :: (a -> b) -> [a] -> [b] 
+map _ [] = [] 
+map f (x:xs) = f x : map f xs
+-}
+
+
 
 -- (\x -> x + 1) anonymous function, lambda expression
 
@@ -113,7 +120,7 @@ Therefore...
 data Shape = Square Float | Triangle Float Float
 
 area :: Shape -> Float
-area (Square side) = side ^ 2
+area (Square side)          = side * side
 area (Triangle base height) = 0.5 * base * height 
 
 data Pair a = Pair a a

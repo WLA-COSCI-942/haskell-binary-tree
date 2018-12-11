@@ -1,1 +1,1 @@
-data Triangle = Triangle { a::Int, b::Int, c :: Int }
+data Triangle = Triangle { a :: Int, b :: Int, c :: Int }
